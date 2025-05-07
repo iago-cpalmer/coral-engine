@@ -1,0 +1,9 @@
+[submodule "CoralEngine/vendor/glfw"]
+	path = CoralEngine/vendor/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "CoralEngine/vendor/glm"]
+	path = CoralEngine/vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "CoralEngine/vendor/assimp"]
+	path = CoralEngine/vendor/assimp
+	url = https://github.com/assimp/assimp.git
