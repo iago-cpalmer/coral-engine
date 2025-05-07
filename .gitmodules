@@ -7,3 +7,6 @@
 [submodule "CoralEngine/vendor/assimp"]
 	path = CoralEngine/vendor/assimp
 	url = https://github.com/assimp/assimp.git
+[submodule "CoralEngine/vendor/arena_allocator"]
+	path = CoralEngine/vendor/arena_allocator
+	url = https://github.com/iago-cpalmer/arena_allocator.git

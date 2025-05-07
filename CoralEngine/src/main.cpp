@@ -24,10 +24,8 @@
 
 #include "assets/assets_handler.h"
 
-
 int main()
 {
-
 	if (create_window(800, 600, "Graphics Playground") == -1)
 	{
 		return -1;
