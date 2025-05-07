@@ -7,7 +7,7 @@ All libraries needed can be found in the vendor libraries.
 - ~~3D Renderer~~
 - ~~Assets Handler~~
 - Mesh importer (WIP)
-- ...
+- ... (Support for more advanced OpenGL features)
 
 ## Future plans (once core engine is done):
 - Scene & Asset Editor
