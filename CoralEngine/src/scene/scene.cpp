@@ -1,5 +1,6 @@
 #include "scene.h"
 #include "../renderer/scene_renderer.h"
+#include "../assets/assets_handler.h"
 
 void init_scene(Scene* rpScene)
 {
@@ -36,8 +37,12 @@ void scene_render(Scene* rpScene)
 			transform = glm::rotate(transform, entity->Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
 			transform = glm::rotate(transform, entity->Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 			transform = glm::translate(transform, entity->Position);
-
-			draw_mesh(entity->p_Mesh, transform);
+			
+			Model* p_model = ah_get_model(entity->ModelHandle);
+			for (int i = 0; i < p_model->Meshes.size(); i++)
+			{
+				draw_mesh(&p_model->Meshes.at(i), transform);
+			}
 		}
 	}
 }
@@ -54,7 +59,12 @@ void instantiate_entity(Scene* rp_scene, Entity* entity)
 		}
 	}
 	// add material to table (if possible)
-	add_material_to_table(&rp_scene->SceneRenderData.MaterialTable, entity->p_Mesh->Material);
+	Model* p_model = ah_get_model(entity->ModelHandle);
+	for (int i = 0; i < p_model->Meshes.size(); i++)
+	{
+		add_material_to_table(&rp_scene->SceneRenderData.MaterialTable, p_model->Meshes[i].Material);
+	}
+	
 }
 
 

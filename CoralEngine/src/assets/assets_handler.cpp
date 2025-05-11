@@ -1,11 +1,16 @@
 #include "assets_handler.h"
+#include <arena_allocator.h>
+#include "assimp_mesh_importer.h"
 
 static std::vector<Texture> _Textures;
 static std::vector<Shader> _Shaders;
 static std::vector<Model> _Models;
+static Arena _MaterialArena;
+
 
 void ah_load_assets()
 {
+    _MaterialArena = { 0 };
     load_textures();
     load_shaders();
     load_models();
@@ -48,7 +53,7 @@ void load_models()
 
 void load_model(Model* rp_model, Asset& r_model)
 {
-    // TODO: implement
+    import_model(rp_model, r_model.Path);
 }
 ModelHandle ah_get_model_handle(ModelName r_modelName)
 {
@@ -84,9 +89,10 @@ ShaderHandle ah_get_shader_handle(ShaderName r_shaderName)
 
 Shader* ah_get_shader(ShaderHandle r_shaderHandle)
 {
-    if (r_shaderHandle.Id >= _Shaders.size())
-    {
-        ;
-    }
     return &_Shaders[r_shaderHandle.Id];
+}
+
+Material* ah_create_material()
+{
+    return (Material*) arena_alloc(&_MaterialArena, sizeof(Material));
 }

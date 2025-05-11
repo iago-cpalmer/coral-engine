@@ -76,9 +76,9 @@ int main()
 	mesh.Material = &defMat;
 
 	Entity cubeEntity;
-	cubeEntity.p_Mesh = &mesh;
+	cubeEntity.ModelHandle = ah_get_model_handle(ModelName::BACKPACK);
 	cubeEntity.Position = glm::vec3(0);
-	cubeEntity.Rotation = glm::vec3(0);
+	cubeEntity.Rotation = glm::vec3(0, 0, 0);
 	cubeEntity.Scale = glm::vec3(1);
 
 	instantiate_entity(&scene, &cubeEntity);
@@ -107,12 +107,12 @@ int main()
 	lightPlane.Material = &lightMat;
 
 	Entity lightSourceEntity;
-	lightSourceEntity.p_Mesh = &lightPlane;
+	//lightSourceEntity.p_Mesh = &lightPlane;
 	lightSourceEntity.Position = glm::vec3(0);
 	lightSourceEntity.Rotation = glm::vec3(0);
 	lightSourceEntity.Scale = glm::vec3(1);
 
-	instantiate_entity(&scene, &lightSourceEntity);
+	//instantiate_entity(&scene, &lightSourceEntity);
 	
 
 	PointLight pointLight;
@@ -135,7 +135,6 @@ int main()
 	add_point_light(&scene, &pointLight);
 
 	// ^^^ ----------------------------
-
 	while (!window_should_close())
 	{
 #pragma region region_time_and_input

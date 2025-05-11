@@ -147,4 +147,7 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\basic_shader.shad" />
+  </ItemGroup>
 </Project>

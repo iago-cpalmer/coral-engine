@@ -9,26 +9,29 @@ static std::vector<unsigned int> s_Indices;
 void import_model(Model* rp_model, std::string r_path)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(r_path, aiProcess_Triangulate | aiProcess_FlipUVs);
-
+    const aiScene* scene = importer.ReadFile(r_path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
         return;
     }
+    printf("num meshes: %d \n", scene->mNumMeshes);
     rp_model->Meshes.reserve(scene->mNumMeshes);
     process_node(scene->mRootNode, scene, rp_model);
 }
 
 void process_node(aiNode* rp_node, const aiScene* rp_scene, Model* rp_model)
 {
-    if (rp_node->mChildren == nullptr)
-    {
-        return;
-    }
+   
     for (int i = 0; i < rp_node->mNumMeshes; i++)
     {
         process_mesh(rp_scene->mMeshes[rp_node->mMeshes[i]], rp_scene, rp_model);
+    }
+
+    if (rp_node->mChildren == nullptr)
+    {
+        return;
     }
 
     for (int i = 0; i < rp_node->mNumChildren; i++)
@@ -93,28 +96,47 @@ void process_mesh(aiMesh* rp_mesh, const aiScene* rp_scene, Model* rp_model)
         }
     }
 
-    Material mat;
+    // TODO: this material should already be created with the external asset creator
+    // in the asset_handler's material table
+    Material* meshMaterial = ah_create_material();;
     if (rp_mesh->mMaterialIndex >= 0)
     {
-        mat.Shader = ah_get_shader_handle(ShaderName::BASIC_SHADER);
+        //meshMaterial = ah_create_material();
+        meshMaterial->Shader = ah_get_shader_handle(ShaderName::BASIC_SHADER);
+        // TODO: the texture from the material should be added in the asset handler's texture table
+        // on the external asset creator
+        meshMaterial->AlbedoMap = ah_get_texture_handle(TextureName::CONTAINER);
+
         aiMaterial* material = rp_scene->mMaterials[rp_mesh->mMaterialIndex];
-        aiColor3D color(0.f, 0.f, 0.f);
+        aiColor3D color(0.0f, 0.0f, 0.0f);
         float shininess;
 
         material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-        mat.Diffuse = glm::vec3(color.r, color.b, color.g);
+        meshMaterial->Diffuse = glm::vec3(color.r, color.b, color.g);
 
         material->Get(AI_MATKEY_COLOR_AMBIENT, color);
-        mat.Ambient = glm::vec3(color.r, color.b, color.g);
+        meshMaterial->Ambient = glm::vec3(color.r, color.b, color.g);
 
         material->Get(AI_MATKEY_COLOR_SPECULAR, color);
-        mat.Specular = glm::vec3(color.r, color.b, color.g);
+        meshMaterial->Specular = glm::vec3(color.r, color.b, color.g);
 
         material->Get(AI_MATKEY_SHININESS, shininess);
-        mat.Shininess = shininess;
+        meshMaterial->Shininess = shininess;
     }
     else
     {
-        // mat = DEFAULT_MAT;
+        // TODO: add default material
+        //meshMaterial = DEFAULT_MAT;
     }
+
+    VertexAttribute vertexAttributes[] =
+    {
+        VertexAttribute{sizeof(float), 3, GL_FLOAT},	// Position
+        VertexAttribute{sizeof(float), 3, GL_FLOAT},	// Normal
+        VertexAttribute{sizeof(float), 2, GL_FLOAT}		// UV
+    };
+
+    create_mesh(&mesh, vertexAttributes, 3, (float*)s_Vertices.data(), rp_mesh->mNumVertices, s_Indices.data(), indexCount, GL_STATIC_DRAW);
+    mesh.Material = meshMaterial;
+    rp_model->Meshes.push_back(mesh);
 }

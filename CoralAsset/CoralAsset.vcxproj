@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0ae567a7-119a-4e52-a907-660c71260cf3}</ProjectGuid>
-    <RootNamespace>CoralEngine</RootNamespace>
+    <ProjectGuid>{badb2d3c-d940-4e1c-b36e-efeec028d9cf}</ProjectGuid>
+    <RootNamespace>CoralAsset</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -78,15 +78,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)vendor\glfw\build\src\Release;$(ProjectDir)vendor\assimp\lib\Release;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(SolutionDir)CoralEngine\vendor\assimp\lib\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)vendor\glfw\build\src\Release;$(ProjectDir)vendor\assimp\lib\Release;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(SolutionDir)CoralEngine\vendor\assimp\lib\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -122,13 +118,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)vendor\arena_allocator;$(ProjectDir)vendor\stb;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\assimp\include;$(ProjectDir)vendor\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)CoralEngine\vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,66 +135,25 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)vendor\arena_allocator;$(ProjectDir)vendor\stb;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\assimp\include;$(ProjectDir)vendor\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)CoralEngine\vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\assets\assets_handler.cpp" />
-    <ClCompile Include="src\assets\assimp_mesh_importer.cpp" />
-    <ClCompile Include="src\core\input_handler.cpp" />
-    <ClCompile Include="src\core\time_manager.cpp" />
-    <ClCompile Include="src\core\window.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\renderer\camera.cpp" />
-    <ClCompile Include="src\renderer\data\material.cpp" />
-    <ClCompile Include="src\renderer\data\mesh.cpp" />
-    <ClCompile Include="src\renderer\data\model.cpp" />
-    <ClCompile Include="src\renderer\data\shader.cpp" />
-    <ClCompile Include="src\renderer\data\texture.cpp" />
-    <ClCompile Include="src\renderer\material_table.cpp" />
-    <ClCompile Include="src\renderer\renderer.cpp" />
-    <ClCompile Include="src\renderer\scene_renderer.cpp" />
-    <ClCompile Include="src\scene\entity.cpp" />
-    <ClCompile Include="src\scene\scene.cpp" />
-    <ClCompile Include="vendor\arena_allocator\arena_allocator.cpp" />
-    <ClCompile Include="vendor\glad\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\assets\assets_handler.h" />
-    <ClInclude Include="src\assets\asset_list.h" />
-    <ClInclude Include="src\assets\assimp_mesh_importer.h" />
-    <ClInclude Include="src\core\input_handler.h" />
-    <ClInclude Include="src\core\time_manager.h" />
-    <ClInclude Include="src\core\utils.h" />
-    <ClInclude Include="src\core\window.h" />
-    <ClInclude Include="src\meshes.h" />
-    <ClInclude Include="src\renderer\camera.h" />
-    <ClInclude Include="src\renderer\data\material.h" />
-    <ClInclude Include="src\renderer\data\mesh.h" />
-    <ClInclude Include="src\renderer\data\model.h" />
-    <ClInclude Include="src\renderer\data\shader.h" />
-    <ClInclude Include="src\renderer\data\texture.h" />
-    <ClInclude Include="src\renderer\light\directional_light.h" />
-    <ClInclude Include="src\renderer\light\point_light.h" />
-    <ClInclude Include="src\renderer\material_table.h" />
-    <ClInclude Include="src\renderer\renderer.h" />
-    <ClInclude Include="src\renderer\scene_renderer.h" />
-    <ClInclude Include="src\scene\entity.h" />
-    <ClInclude Include="src\scene\scene.h" />
-    <ClInclude Include="vendor\arena_allocator\arena_allocator.h" />
-    <ClInclude Include="vendor\glad\include\glad\glad.h" />
-    <ClInclude Include="vendor\glad\include\KHR\khrplatform.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\shaders\basic_shader.shad" />
+    <ClInclude Include="src\model.h" />
+    <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

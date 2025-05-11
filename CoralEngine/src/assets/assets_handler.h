@@ -27,7 +27,6 @@ void load_shaders();
 void load_shader(Shader* rp_shader, ShaderAsset& r_shader);
 
 ShaderHandle ah_get_shader_handle(ShaderName r_shaderName);
-
 Shader* ah_get_shader(ShaderHandle r_shaderHandle);
 
 // ------------------------------------
@@ -39,6 +38,12 @@ void load_model(Model* rp_model, Asset& r_model);
 
 ModelHandle ah_get_model_handle(ModelName r_modelName);
 Model* ah_get_model(ModelHandle r_modelHandle);
+
+// ------------------------------------
+// Materials
+// ------------------------------------
+
+Material* ah_create_material();
 
 #endif // ! ASSETS_HANDLER_H
 

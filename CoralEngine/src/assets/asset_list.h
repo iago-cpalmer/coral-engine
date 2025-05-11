@@ -41,8 +41,7 @@ enum class ModelName
 
 static Asset _ModelAssets[] =
 {
-	Asset{"container.jpg"},
-	Asset{"wall.jpg"},
+	Asset{"res/models/cube.fbx"},
 };
 
 // ------------------------------------

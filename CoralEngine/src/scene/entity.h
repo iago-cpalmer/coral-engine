@@ -2,7 +2,7 @@
 #define ENTITY_H
 
 #include <glm/vec3.hpp>
-#include "../renderer/data/mesh.h"
+#include "../renderer/data/model.h"
 
 typedef struct
 {
@@ -11,7 +11,7 @@ typedef struct
 	glm::vec3 Scale;
 
 	// TODO: entities should have components. Then a mesh should be a component
-	Mesh* p_Mesh;
+	ModelHandle ModelHandle;
 
 } Entity;
 
