@@ -57,7 +57,7 @@ void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform)
 
 	shader_set_model_matrix(ah_get_shader(rp_mesh->Material->Shader), r_transform);
 	
-	draw_indexed(rp_mesh->Vao, rp_mesh->Ebo, rp_mesh->NrIndices);
+	draw_indexed(rp_mesh->Vao, rp_mesh->Ibo, rp_mesh->IndexCount);
 }
 
 

@@ -131,9 +131,9 @@ void process_mesh(aiMesh* rp_mesh, const aiScene* rp_scene, Model* rp_model)
 
     VertexAttribute vertexAttributes[] =
     {
-        VertexAttribute{sizeof(float), 3, GL_FLOAT},	// Position
-        VertexAttribute{sizeof(float), 3, GL_FLOAT},	// Normal
-        VertexAttribute{sizeof(float), 2, GL_FLOAT}		// UV
+        VertexAttribute{VertexAttributeType::FLOAT, 3},	// Position
+        VertexAttribute{VertexAttributeType::FLOAT, 3},	// Normal
+        VertexAttribute{VertexAttributeType::FLOAT, 2}		// UV
     };
 
     create_mesh(&mesh, vertexAttributes, 3, (float*)s_Vertices.data(), rp_mesh->mNumVertices, s_Indices.data(), indexCount, GL_STATIC_DRAW);

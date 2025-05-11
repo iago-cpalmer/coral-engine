@@ -3,6 +3,8 @@
 
 #include "texture.h"
 #include "material.h"
+#include "buffers/vertex_buffer_layout.h"
+#include "buffers/vertex_array.h"
 
 typedef struct
 {
@@ -15,21 +17,14 @@ typedef struct
 {
 	Material* Material;
 
-	unsigned int Vao;
-	unsigned int Vbo;
-	unsigned int Ebo;
+	VertexArray Vao;
+	VertexBuffer Vbo;
+	IndexBuffer Ibo;
 
-	int NrIndices;
+	int IndexCount;
 
 } Mesh;
 
-// (GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer)
-typedef struct
-{
-	GLint SizeOfType;
-	GLint Count;
-	GLenum Type;
-} VertexAttribute;
 
 void create_mesh(Mesh* rpMesh, VertexAttribute* rVertexAttributes, int rVertexAttrCount, float* rVertices, int rVertexCount, unsigned int* rIndices, int rIndexCount, GLenum rUsage);
 

@@ -58,9 +58,9 @@ int main()
 	// vvv Mesh creation --------------
 	VertexAttribute vertexAttributes[] =
 	{
-		VertexAttribute{sizeof(float), 3, GL_FLOAT},	// Position
-		VertexAttribute{sizeof(float), 3, GL_FLOAT},	// Normal
-		VertexAttribute{sizeof(float), 2, GL_FLOAT}		// UV
+		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Position
+		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Normal
+		VertexAttribute{VertexAttributeType::FLOAT, 2}		// UV
 	};
 	Mesh mesh;
 	create_mesh(&mesh, vertexAttributes, 3, VERTICES_CUBE, 24, INDICES_CUBE, 36, GL_STATIC_DRAW);
@@ -89,8 +89,8 @@ int main()
 	
 	VertexAttribute vertexAttributesLight[] =
 	{
-		VertexAttribute{sizeof(float), 3, GL_FLOAT},
-		VertexAttribute{sizeof(float), 2, GL_FLOAT}
+		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Position
+		VertexAttribute{VertexAttributeType::FLOAT, 2}		// UV
 	};
 
 	Mesh lightPlane;

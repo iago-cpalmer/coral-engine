@@ -5,6 +5,8 @@
 #include "../renderer/camera.h"
 #include <glm/ext/matrix_float4x4.hpp>
 
+#include "data/buffers/index_buffer.h"
+#include "data/buffers/vertex_array.h"
 
 //#define WIREFRAME_MODE
 
@@ -29,7 +31,7 @@ void renderer_finish_render();
 void renderer_change_viewport_callback(int rWidth, int rHeight);
 
 
-void draw_indexed(unsigned int vao, unsigned int ebo, unsigned int indexNr);
+void draw_indexed(const VertexArray& r_vao, const IndexBuffer& r_ibo, unsigned int r_indexCount);
 
 #if _DEBUG
 void APIENTRY gl_debug_message_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);

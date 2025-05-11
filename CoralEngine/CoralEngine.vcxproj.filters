@@ -72,6 +72,18 @@
     <ClCompile Include="vendor\arena_allocator\arena_allocator.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\data\buffers\index_buffer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\data\buffers\vertex_buffer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\data\buffers\vertex_array.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\data\buffers\vertex_buffer_layout.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendor\glad\include\glad\glad.h">
@@ -144,6 +156,18 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="vendor\arena_allocator\arena_allocator.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\data\buffers\index_buffer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\data\buffers\vertex_buffer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\data\buffers\vertex_array.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\data\buffers\vertex_buffer_layout.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

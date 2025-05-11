@@ -55,11 +55,11 @@ void renderer_finish_render()
 	glfwPollEvents();
 }
 
-void draw_indexed(unsigned int vao, unsigned int ebo, unsigned int indexNr)
+void draw_indexed(const VertexArray& r_vao, const IndexBuffer& r_ibo, unsigned int r_indexCount)
 {
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glDrawElements(GL_TRIANGLES, indexNr, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(r_vao.Id);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, r_ibo.Id);
+	glDrawElements(GL_TRIANGLES, r_indexCount, GL_UNSIGNED_INT, 0);
 }
 
 #if _DEBUG
