@@ -31,6 +31,8 @@ void collect_assets(const fs::path& dir) {
                 asset_type = get_asset_type(relative_path.substr(pos_ext));
             }
 
+            std::replace(relative_path.begin(), relative_path.end(), '\\', '/');
+
             switch (asset_type)
             {
                 case AssetType::NONE:
@@ -70,7 +72,7 @@ int main() {
     collect_assets(res_path);
 
     // Process models
-    process_models();
+    //process_models();
 
     // Process shaders
     process_shaders();
@@ -81,18 +83,19 @@ int main() {
 
     out_file << "typedef struct\n";
     out_file << "{\n";
-    out_file << " \tconst char* Path\n";
+    out_file << " \tconst char* Path;\n";
     out_file << "} Asset;\n";
     
     out_file << "typedef struct\n";
     out_file << "{\n";
-    out_file << " \tAsset Fragment\n";
-    out_file << " \tAsset Vertex\n";
+    out_file << " \tAsset Fragment;\n";
+    out_file << " \tAsset Vertex;\n";
     out_file << "} ShaderAsset;\n";
 
     // write assets
     write_textures(out_file);
     write_shaders(out_file);
+    write_models(out_file);
 
     // End the asset list and close the header file
     out_file << "#endif // ASSET_LIST_H\n";

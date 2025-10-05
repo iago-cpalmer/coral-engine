@@ -62,24 +62,37 @@ int main()
 		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Normal
 		VertexAttribute{VertexAttributeType::FLOAT, 2}		// UV
 	};
-	Mesh mesh;
-	create_mesh(&mesh, vertexAttributes, 3, VERTICES_CUBE, 24, INDICES_CUBE, 36, GL_STATIC_DRAW);
 
-	Material defMat;
-	defMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
-	defMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
-	defMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
-	defMat.Shininess = 32.0f;
-	defMat.Shader = ah_get_shader_handle(ShaderName::BASIC_SHADER);
-	defMat.AlbedoMap = ah_get_texture_handle(TextureName::CONTAINER);
+	//Mesh mesh;
+	//create_mesh(&mesh, vertexAttributes, 3, VERTICES_CUBE, 24, INDICES_CUBE, 36, 1, GL_STATIC_DRAW);
+	//mesh.Submeshes[0] = { 0, 36 };
+	//Material defMat;
+	//defMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	//defMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+	//defMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	//defMat.Shininess = 32.0f;
+	//defMat.Shader = ah_get_shader_handle(ShaderName::BASIC_SHADER);
+	//defMat.AlbedoMap = ah_get_texture_handle(TextureName::CONTAINER);
 
-	mesh.Material = &defMat;
+	//mesh.Materials[0] = defMat;
 
 	Entity cubeEntity;
-	cubeEntity.ModelHandle = ah_get_model_handle(ModelName::BACKPACK);
+	//cubeEntity.p_Mesh = &mesh;
+	cubeEntity.p_Mesh = ah_get_model(ah_get_model_handle(ModelName::backpack));
 	cubeEntity.Position = glm::vec3(0);
 	cubeEntity.Rotation = glm::vec3(0, 0, 0);
-	cubeEntity.Scale = glm::vec3(1);
+	cubeEntity.Scale = glm::vec3(0.25f);
+
+	Material cubeMat;
+	cubeMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	cubeMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+	cubeMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	cubeMat.Shininess = 32.0f;
+	cubeMat.Shader = ah_get_shader_handle(ShaderName::basic_shader);
+	cubeMat.AlbedoMap = ah_get_texture_handle(TextureName::container);
+
+	cubeEntity.p_Material = &cubeMat;
+	cubeEntity.MaterialCount = 1;
 
 	instantiate_entity(&scene, &cubeEntity);
 
@@ -94,23 +107,25 @@ int main()
 	};
 
 	Mesh lightPlane;
-	create_mesh(&lightPlane, vertexAttributesLight, 2, VERTICES_PLANE, 4, INDICES_PLANE, 6, GL_STATIC_DRAW);
-
+	create_mesh(&lightPlane, vertexAttributesLight, 2, VERTICES_PLANE, 4, INDICES_PLANE, 6, 1, GL_STATIC_DRAW);
+	lightPlane.Submeshes[0] = { 0, 6 };
 	Material lightMat;
 	lightMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 	lightMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
 	lightMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	lightMat.Shininess = 32.0f;
-	lightMat.Shader = ah_get_shader_handle(ShaderName::LIGHT_SHADER);
-	lightMat.AlbedoMap = ah_get_texture_handle(TextureName::LIGHT_PLANE_TEXTURE);
+	lightMat.Shader = ah_get_shader_handle(ShaderName::light_shader);
+	lightMat.AlbedoMap = ah_get_texture_handle(TextureName::point_light);
 
-	lightPlane.Material = &lightMat;
+	// TODO: Remove lightPlane.Materials[0] = lightMat;
 
 	Entity lightSourceEntity;
-	//lightSourceEntity.p_Mesh = &lightPlane;
+	lightSourceEntity.p_Mesh = &lightPlane;
 	lightSourceEntity.Position = glm::vec3(0);
 	lightSourceEntity.Rotation = glm::vec3(0);
 	lightSourceEntity.Scale = glm::vec3(1);
+	lightSourceEntity.p_Material = &lightMat;
+	lightSourceEntity.MaterialCount = 1;
 
 	//instantiate_entity(&scene, &lightSourceEntity);
 	

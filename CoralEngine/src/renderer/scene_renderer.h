@@ -10,7 +10,7 @@
 
 void begin_render(Scene* rp_Scene, CameraInfo* rpCamera);
 
-void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform);
+void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform, Material* r_materials, unsigned int r_matCount);
 
 static void _calculate_view_matrix();
 static void _calculate_projection_matrix();

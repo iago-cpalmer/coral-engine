@@ -1,71 +1,80 @@
-#ifndef ASSETS_LIST_H
-#define ASSETS_LIST_H
+#ifndef ASSET_LIST_H
+#define ASSET_LIST_H
 
 typedef struct
 {
 	const char* Path;
 } Asset;
-
-// ------------------------------------
-// Textures
-// ------------------------------------
-
-enum class TextureName
-{
-	CONTAINER,	// from container.jpg
-	WALL,		// from wall.jpg
-	LIGHT_PLANE_TEXTURE,
-
-	COUNT
-};
-
-
-
-static Asset _TextureAssets[] =
-{
-	Asset{"res/images/container.jpg"},
-	Asset{"res/images/wall.jpg"},
-	Asset{"res/images/point_light.png"}
-};
-
-// ------------------------------------
-// Models
-// ------------------------------------
-
-enum class ModelName
-{
-	BACKPACK,
-
-	COUNT
-};
-
-static Asset _ModelAssets[] =
-{
-	Asset{"res/models/cube.fbx"},
-};
-
-// ------------------------------------
-// Shaders
-// ------------------------------------
-
-enum class ShaderName
-{
-	BASIC_SHADER,
-	LIGHT_SHADER,
-	
-	COUNT
-};
-
 typedef struct
 {
 	Asset Fragment;
 	Asset Vertex;
 } ShaderAsset;
 
-static ShaderAsset _ShaderAssets[] =
+// ------------------------------------
+// Textures 
+// ------------------------------------
+enum class TextureName
 {
-	ShaderAsset{{"res/shaders/basic_shader.frag"}, {"res/shaders/basic_shader.vert"}},
-	ShaderAsset{{"res/shaders/light_shader.frag"}, {"res/shaders/light_shader.vert"}}
+	awesomeface,
+	container,
+	directional_light_icon,
+	point_light,
+	wall,
+	leafs,
+	stick,
+	texture,
+	COUNT
+};
+static Asset _TextureAssets[] =
+{
+	Asset{ "res/images/awesomeface.png"},
+	Asset{ "res/images/container.jpg"},
+	Asset{ "res/images/directional_light_icon.png"},
+	Asset{ "res/images/point_light.png"},
+	Asset{ "res/images/wall.jpg"},
+	Asset{ "res/models/leafs.png"},
+	Asset{ "res/models/stick.png"},
+	Asset{ "res/models/texture.png"}
 };
 
-#endif // !ASSETS_LIST_H
+// ------------------------------------
+// Shaders 
+// ------------------------------------
+enum class ShaderName
+{
+	basic_shader,
+	light_shader,
+	COUNT
+};
+static ShaderAsset _ShaderAssets[] =
+{
+	{ Asset{ "res/shaders/basic_shader.frag"}, Asset{ "res/shaders/basic_shader.vert"} },
+	{ Asset{ "res/shaders/light_shader.frag"}, Asset{ "res/shaders/light_shader.vert"} }
+};
+
+// ------------------------------------
+// Models 
+// ------------------------------------
+enum class ModelName
+{
+	backpack,
+	//Car,
+	//cube,
+	//house,
+	////stick,
+	//tree,
+	COUNT
+};
+static Asset _ModelAssets[] =
+{
+	Asset{ "res/models/backpack.fbx"}
+	//Asset{ "res/models/stick.fbx"}
+	//Asset{ "res/models/backpack.fbx"},
+	//Asset{ "res/models/Car.fbx"},
+	//Asset{ "res/models/cube.fbx"},
+	//Asset{ "res/models/house.fbx"},
+	//Asset{ "res/models/stick.fbx"},
+	//Asset{ "res/models/tree.fbx"}
+};
+#endif // ASSET_LIST_H

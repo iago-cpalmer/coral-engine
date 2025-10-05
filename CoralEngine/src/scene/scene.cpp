@@ -38,11 +38,7 @@ void scene_render(Scene* rpScene)
 			transform = glm::rotate(transform, entity->Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 			transform = glm::translate(transform, entity->Position);
 			
-			Model* p_model = ah_get_model(entity->ModelHandle);
-			for (int i = 0; i < p_model->Meshes.size(); i++)
-			{
-				draw_mesh(&p_model->Meshes.at(i), transform);
-			}
+			draw_mesh(entity->p_Mesh, transform, entity->p_Material, entity->MaterialCount);
 		}
 	}
 }
@@ -58,13 +54,6 @@ void instantiate_entity(Scene* rp_scene, Entity* entity)
 			break;
 		}
 	}
-	// add material to table (if possible)
-	Model* p_model = ah_get_model(entity->ModelHandle);
-	for (int i = 0; i < p_model->Meshes.size(); i++)
-	{
-		add_material_to_table(&rp_scene->SceneRenderData.MaterialTable, p_model->Meshes[i].Material);
-	}
-	
 }
 
 

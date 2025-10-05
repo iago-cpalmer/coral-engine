@@ -1,7 +1,6 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <glm/vec3.hpp>
 #include "shader.h"
 #include "texture.h"
 

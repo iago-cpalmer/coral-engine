@@ -1,7 +1,8 @@
 #include "mesh.h"
 #include <iostream>
 
-void create_mesh(Mesh* rpMesh, VertexAttribute* rVertexAttributes, int rVertexAttrCount, float* rVertices, int rVertexCount, unsigned int* rIndices, int rIndexCount, GLenum rUsage)
+void create_mesh(Mesh* rpMesh, VertexAttribute* rVertexAttributes, int rVertexAttrCount, float* rVertices, int rVertexCount, 
+	unsigned int* rIndices, int rIndexCount, int r_subMeshCount, GLenum rUsage)
 {
 	VertexBufferLayout layout = create_vertex_buffer_layout(rVertexAttributes, rVertexAttrCount);
 
@@ -13,6 +14,10 @@ void create_mesh(Mesh* rpMesh, VertexAttribute* rVertexAttributes, int rVertexAt
 	vao_add_ibo(rpMesh->Vao, rpMesh->Ibo);
 
 	rpMesh->IndexCount = rIndexCount;
+
+	rpMesh->SubmeshCount = r_subMeshCount;
+	// TODO rpMesh->Materials = (Material*)malloc(sizeof(Material) * r_subMeshCount);
+	rpMesh->Submeshes = (Submesh*)malloc(sizeof(Submesh) * r_subMeshCount);
 }
 
 void release_mesh(Mesh* rpMesh)

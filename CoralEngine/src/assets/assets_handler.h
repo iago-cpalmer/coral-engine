@@ -5,7 +5,7 @@
 #include <vector>
 #include "../renderer/data/texture.h"
 #include "../renderer/data/shader.h"
-#include "../renderer/data/model.h"
+#include "../renderer/data/mesh.h"
 
 void ah_load_assets();
 
@@ -34,10 +34,10 @@ Shader* ah_get_shader(ShaderHandle r_shaderHandle);
 // ------------------------------------
 
 void load_models();
-void load_model(Model* rp_model, Asset& r_model);
+void load_model(Mesh* rp_mesh, Asset& r_model);
 
 ModelHandle ah_get_model_handle(ModelName r_modelName);
-Model* ah_get_model(ModelHandle r_modelHandle);
+Mesh* ah_get_model(ModelHandle r_modelHandle);
 
 // ------------------------------------
 // Materials

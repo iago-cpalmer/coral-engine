@@ -24,7 +24,7 @@ void begin_render(Scene* rp_Scene, CameraInfo* rpCamera)
 	
 	_calculate_view_matrix();
 	_calculate_projection_matrix();
-
+	/*
 	// write all uniforms to shaders
 	LightEnvironment* pLights = &sp_CurrentScene->SceneRenderData.LightEnv;
 
@@ -44,20 +44,40 @@ void begin_render(Scene* rp_Scene, CameraInfo* rpCamera)
 			shader_set_view_matrix(pShader, s_ViewMatrix);
 			shader_set_projection_matrix(pShader, s_ProjectionMatrix);
 		}
-	}
+	}*/
 }
 
-void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform)
+void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform, Material* r_materials, unsigned int r_matCount)
 {
-	// all rendering stuff
-	use_shader(ah_get_shader(rp_mesh->Material->Shader));
+	LightEnvironment* pLights = &sp_CurrentScene->SceneRenderData.LightEnv;
+	for (unsigned int i = 0; i < rp_mesh->SubmeshCount; i++)
+	{
+		// all rendering stuff
 
-	glActiveTexture(GL_TEXTURE0);
-	use_texture(ah_get_texture(rp_mesh->Material->AlbedoMap));
+		// TODO: all this uniforms should become part of uniform buffers
+		// to avoid writing same uniforms multiple times
+		assert(r_matCount == 1 || r_matCount == rp_mesh->SubmeshCount, "ERROR::Draw_Mesh - No general material used, expected then same number of materials than submeshes\n");
+		Material& mat = r_materials[r_matCount == 1 ? 0 : r_matCount];
+		Shader* shader = ah_get_shader(mat.Shader);
+		use_shader(shader);
 
-	shader_set_model_matrix(ah_get_shader(rp_mesh->Material->Shader), r_transform);
+		write_directional_light_to_shader(shader, pLights->p_DirectionalLight);
+		write_point_light_to_shader(shader, pLights->p_PointLight);
+
+		write_material_to_shader(&mat);
+
+		set_uniform_vec3(shader, "uViewPosition", sp_Camera->Position);
+		shader_set_view_matrix(shader, s_ViewMatrix);
+		shader_set_projection_matrix(shader, s_ProjectionMatrix);
+
+		glActiveTexture(GL_TEXTURE0);
+		use_texture(ah_get_texture(mat.AlbedoMap));
+
+		shader_set_model_matrix(shader, r_transform);
+
+		draw_indexed(rp_mesh->Vao, rp_mesh->Ibo, rp_mesh->Submeshes[i].IndexCount, rp_mesh->Submeshes[i].StartIndex);
+	}
 	
-	draw_indexed(rp_mesh->Vao, rp_mesh->Ibo, rp_mesh->IndexCount);
 }
 
 

@@ -15,7 +15,15 @@ typedef struct
 
 typedef struct
 {
-	Material* Material;
+	unsigned int StartIndex;
+	unsigned int IndexCount;
+} Submesh;
+
+typedef struct
+{
+	// TODO: RemoveMaterial* Materials;
+	Submesh* Submeshes;
+	unsigned int SubmeshCount;
 
 	VertexArray Vao;
 	VertexBuffer Vbo;
@@ -25,8 +33,13 @@ typedef struct
 
 } Mesh;
 
+// Handle to model. Model is a mesh loaded as an asset
+typedef struct
+{
+	unsigned int Id;
+} ModelHandle;
 
-void create_mesh(Mesh* rpMesh, VertexAttribute* rVertexAttributes, int rVertexAttrCount, float* rVertices, int rVertexCount, unsigned int* rIndices, int rIndexCount, GLenum rUsage);
+void create_mesh(Mesh* rpMesh, VertexAttribute* rVertexAttributes, int rVertexAttrCount, float* rVertices, int rVertexCount, unsigned int* rIndices, int rIndexCount, int r_subMeshCount, GLenum rUsage);
 
 void release_mesh(Mesh* rpMesh);
 

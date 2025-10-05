@@ -4,7 +4,7 @@
 
 static std::vector<Texture> _Textures;
 static std::vector<Shader> _Shaders;
-static std::vector<Model> _Models;
+static std::vector<Mesh> _Models;
 static Arena _MaterialArena;
 
 
@@ -51,16 +51,16 @@ void load_models()
     }
 }
 
-void load_model(Model* rp_model, Asset& r_model)
+void load_model(Mesh* rp_mesh, Asset& r_model)
 {
-    import_model(rp_model, r_model.Path);
+    import_model(rp_mesh, r_model.Path);
 }
 ModelHandle ah_get_model_handle(ModelName r_modelName)
 {
     return ModelHandle{ (unsigned int)r_modelName };
 }
 
-Model* ah_get_model(ModelHandle r_modelHandle)
+Mesh* ah_get_model(ModelHandle r_modelHandle)
 {
     assert(r_modelHandle.Id < _Models.size());
     return &_Models[r_modelHandle.Id];

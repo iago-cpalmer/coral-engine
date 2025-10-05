@@ -31,7 +31,7 @@ void renderer_finish_render();
 void renderer_change_viewport_callback(int rWidth, int rHeight);
 
 
-void draw_indexed(const VertexArray& r_vao, const IndexBuffer& r_ibo, unsigned int r_indexCount);
+void draw_indexed(const VertexArray& r_vao, const IndexBuffer& r_ibo, unsigned int r_indexCount, unsigned int r_startIndex);
 
 #if _DEBUG
 void APIENTRY gl_debug_message_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);

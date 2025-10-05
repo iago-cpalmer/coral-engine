@@ -18,17 +18,14 @@ void write_textures(std::ofstream& r_outputFile)
     r_outputFile << "// ------------------------------------\n";
 
     // Enum
-    r_outputFile << "enum class TextureNames\n";
+    r_outputFile << "enum class TextureName\n";
     r_outputFile << "{\n";
     for (size_t i = 0; i < _Textures.size(); i++)
     {
         r_outputFile << "\t" << get_asset_name(_Textures[i]);
-        if (i < _Textures.size() - 1)
-        {
-            r_outputFile << ",";
-        }
-        r_outputFile << "\n";
+        r_outputFile << ",\n";
     }
+    r_outputFile << "\tCOUNT\n";
     r_outputFile << "};\n";
 
     // Paths
@@ -37,7 +34,7 @@ void write_textures(std::ofstream& r_outputFile)
 
     for (size_t i = 0; i < _Textures.size(); i++)
     {
-        r_outputFile << "\tAsset{ \"" << _Textures[i] << " \"}";
+        r_outputFile << "\tAsset{ \"" << _Textures[i] << "\"}";
         if (i < _Textures.size() - 1)
         {
             r_outputFile << ",";

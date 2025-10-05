@@ -51,17 +51,14 @@ void write_shaders(std::ofstream& r_outputFile)
     r_outputFile << "// ------------------------------------\n";
 
     // Enum
-    r_outputFile << "enum class ShaderNames\n";
+    r_outputFile << "enum class ShaderName\n";
     r_outputFile << "{\n";
     for (size_t i = 0; i < _ShaderPrograms.size(); i++)
     {
         r_outputFile << "\t" << _ShaderPrograms[i].Name;
-        if (i < _ShaderPrograms.size() - 1)
-        {
-            r_outputFile << ",";
-        }
-        r_outputFile << "\n";
+        r_outputFile << ",\n";
     }
+    r_outputFile << "\tCOUNT\n";
     r_outputFile << "};\n";
 
     // Paths
@@ -71,7 +68,7 @@ void write_shaders(std::ofstream& r_outputFile)
     for (size_t i = 0; i < _ShaderPrograms.size(); i++)
     {
         r_outputFile << "\t{ Asset{ \"" << _ShaderPrograms[i].FragmentPath << "\"}"
-            << ", Asset{ \"" << _ShaderPrograms[i].VertexPath << "\"}";
+            << ", Asset{ \"" << _ShaderPrograms[i].VertexPath << "\"} }";
         if (i < _ShaderPrograms.size() - 1)
         {
             r_outputFile << ",";
