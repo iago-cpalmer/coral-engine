@@ -4,7 +4,6 @@
 #include <string>
 #include "../renderer/camera.h"
 #include "entity.h"
-#include "../renderer/material_table.h"
 #include "../renderer/light/directional_light.h"
 #include "../renderer/light/point_light.h"
 
@@ -20,10 +19,6 @@ typedef struct
 {
 	// Light environment
 	LightEnvironment LightEnv;
-
-	MaterialTable MaterialTable;	// Material table is used to avoid setting uniforms multiple time
-									// to the same material, for each entity that shares the material.
-									// TODO: implement uniform buffers to avoid this
 									
 } SceneRenderingData;
 

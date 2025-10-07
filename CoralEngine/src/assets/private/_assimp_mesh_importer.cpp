@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "../public/assets_handler.h"
+#include "../../core/memory_utils.h"
 
 static std::vector<Vertex> s_Vertices;
 static std::vector<unsigned int> s_Indices;
@@ -41,7 +42,7 @@ void import_model(Model* rp_model, std::string r_path)
         vertexCount += scene->mMeshes[i]->mNumVertices;
         indexCount += scene->mMeshes[i]->mNumFaces*3;
     }
-    rp_model->p_Mesh = (Mesh*)malloc(sizeof(Mesh));
+    rp_model->p_Mesh = (Mesh*)CE_MALLOC(sizeof(Mesh));
     create_mesh(rp_model->p_Mesh, vertexAttributes, 3, nullptr, vertexCount, nullptr, indexCount, scene->mNumMeshes, GL_STATIC_DRAW);
     // ^^^ ---------------------------
 

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <queue>
 #include "../../core/ErrorHandler.h"
+#include "../../core/memory_utils.h"
 
 static ShaderData NULL_SHADER_DATA = { nullptr, INVALID_GENERATION_MASK };
 static std::vector<ShaderData> _Shaders;
@@ -111,7 +112,7 @@ void _load_model(const AssetToLoadData& asset)
         return;
     }
   
-    Model* pModel = (Model*)malloc(sizeof(Model));
+    Model* pModel = (Model*)CE_MALLOC(sizeof(Model));
     import_model(pModel, asset.AssetData.ModelData.Path);
     data.pModel = pModel;
 }
@@ -156,7 +157,7 @@ void _load_texture(const AssetToLoadData& asset)
         THROW_ERROR("ERROR::_load_texture - Handle is not valid!");
     }
 
-    Texture* texture = (Texture*) malloc(sizeof(Texture));
+    Texture* texture = (Texture*)CE_MALLOC(sizeof(Texture));
     create_texture(texture, asset.AssetData.TextureData.Path);
     data.pTexture = texture;
 }
@@ -238,7 +239,7 @@ void _load_shader(const AssetToLoadData& asset)
         THROW_ERROR("ERROR::_load_texture - Handle is not valid!");
     }
 
-    Shader* shader = (Shader*)malloc(sizeof(Shader));
+    Shader* shader = (Shader*)CE_MALLOC(sizeof(Shader));
     create_shader(shader, asset.AssetData.ShaderData.Vertex.Path, asset.AssetData.ShaderData.Fragment.Path);
     use_shader(shader);
     data.pShader = shader;

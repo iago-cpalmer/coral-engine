@@ -93,10 +93,11 @@ static void _calculate_view_matrix()
 
 static void _calculate_projection_matrix()
 {
-	if (sp_Camera != nullptr && RendererData.ViewportSizePx != glm::vec2(0, 0))
+	const RenderData& renderData = get_renderer_data();
+	if (sp_Camera != nullptr && renderData.ViewportSizePx != glm::vec2(0, 0))
 	{
 		s_ProjectionMatrix = glm::perspective(glm::radians(sp_Camera->Fov),
-			RendererData.ViewportSizePx.x / RendererData.ViewportSizePx.y,
+			renderData.ViewportSizePx.x / renderData.ViewportSizePx.y,
 			sp_Camera->NearPlane,
 			sp_Camera->FarPlane);
 	}

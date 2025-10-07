@@ -18,4 +18,7 @@ typedef struct
 	unsigned int GenerationId;
 } ModelHandle;
 
+void model_init(Model* pModel);
+
+
 #endif // !MODEL_H

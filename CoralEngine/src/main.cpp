@@ -24,6 +24,7 @@
 
 #include "assets/public/assets_handler.h"
 #include "assets/asset_list.h"
+#include "core/memory_utils.h"
 
 const float DESIRED_FPS = 120;
 
@@ -77,13 +78,13 @@ int main()
 	cubeEntity.meshRendererData.ModelHandle = al_get_model_handle(ModelName::backpack);
 	cubeEntity.Position = glm::vec3(0);
 	cubeEntity.Rotation = glm::vec3(0, 0, 0);
-	cubeEntity.Scale = glm::vec3(0.25f);
+	cubeEntity.Scale = glm::vec3(1.0f);
 
 	Entity cube2Entity;
 	cube2Entity.meshRendererData.ModelHandle = al_get_model_handle(ModelName::backpack);
-	cube2Entity.Position = glm::vec3(3, 0, 0);
+	cube2Entity.Position = glm::vec3(1, 0, 0);
 	cube2Entity.Rotation = glm::vec3(0, 0, 0);
-	cube2Entity.Scale = glm::vec3(0.25f);
+	cube2Entity.Scale = glm::vec3(1.0f);
 
 	// --- Definition of material --------
 	Material cubeMat;
@@ -111,7 +112,7 @@ int main()
 	Model cubeModel;
 	cubeModel.p_Mesh = &cubeMesh;
 	cubeModel.MaterialCount = 1;
-	cubeModel.p_MaterialHandles = (MaterialHandle*)malloc(sizeof(MaterialHandle) * cubeModel.MaterialCount);
+	cubeModel.p_MaterialHandles = (MaterialHandle*)CE_MALLOC(sizeof(MaterialHandle) * cubeModel.MaterialCount);
 	cubeModel.p_MaterialHandles[0] = ah_register_material(&cubeMat);
 
 	ModelHandle cubeModelHandle = ah_register_model(&cubeModel);
@@ -133,8 +134,8 @@ int main()
 	};
 
 	Mesh lightPlane;
-	create_mesh(&lightPlane, vertexAttributesLight, 2, VERTICES_PLANE, 4, INDICES_PLANE, 6, 1, GL_STATIC_DRAW);
-	lightPlane.Submeshes[0] = { 0, 6 };
+	create_mesh(&lightPlane, vertexAttributesLight, 2, VERTICES_PLANE, 4, INDICES_PLANE, 12, 1, GL_STATIC_DRAW);
+	lightPlane.Submeshes[0] = { 0, 12 };
 	
 	Material lightMat;
 	lightMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -153,7 +154,7 @@ int main()
 	Model lightSourceModel;
 	lightSourceModel.p_Mesh = &lightPlane;
 	lightSourceModel.MaterialCount = 1;
-	lightSourceModel.p_MaterialHandles = (MaterialHandle*)malloc(sizeof(MaterialHandle));
+	lightSourceModel.p_MaterialHandles = (MaterialHandle*)CE_MALLOC(sizeof(MaterialHandle));
 	lightSourceModel.p_MaterialHandles[0] = matLightHandle;
 
 	ModelHandle lightModelHandle = ah_register_model(&lightSourceModel);

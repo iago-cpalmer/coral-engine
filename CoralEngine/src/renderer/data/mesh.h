@@ -21,7 +21,6 @@ typedef struct
 
 typedef struct
 {
-	// TODO: RemoveMaterial* Materials;
 	Submesh* Submeshes;
 	unsigned int SubmeshCount;
 

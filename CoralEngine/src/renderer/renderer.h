@@ -23,10 +23,7 @@ enum class FaceCullingType
 	FRONT_AND_BACK
 };
 
-// TODO: this renderer data should not be global. It should be static inside the cpp file.
-// Now is done this way as it's needed in main.cpp, inside the main loop, to pass matrices
-// to shaders.
-extern RenderData RendererData;
+const RenderData& get_renderer_data();
 
 void renderer_init_opengl();
 

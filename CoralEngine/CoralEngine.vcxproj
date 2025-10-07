@@ -166,7 +166,6 @@
     <ClCompile Include="src\renderer\data\model.cpp" />
     <ClCompile Include="src\renderer\data\shader.cpp" />
     <ClCompile Include="src\renderer\data\texture.cpp" />
-    <ClCompile Include="src\renderer\material_table.cpp" />
     <ClCompile Include="src\renderer\renderer.cpp" />
     <ClCompile Include="src\renderer\scene_renderer.cpp" />
     <ClCompile Include="src\scene\entity.cpp" />
@@ -180,6 +179,7 @@
   <ItemGroup>
     <ClInclude Include="src\assets\asset_handler_types.h" />
     <ClInclude Include="src\assets\public\assets_handler.h" />
+    <ClInclude Include="src\core\memory_utils.h" />
     <ClInclude Include="src\renderer\data\buffers\index_buffer.h" />
     <ClInclude Include="src\assets\private\_assets_handler.h" />
     <ClInclude Include="src\assets\asset_list.h" />
@@ -197,7 +197,6 @@
     <ClInclude Include="src\renderer\data\texture.h" />
     <ClInclude Include="src\renderer\light\directional_light.h" />
     <ClInclude Include="src\renderer\light\point_light.h" />
-    <ClInclude Include="src\renderer\material_table.h" />
     <ClInclude Include="src\renderer\renderer.h" />
     <ClInclude Include="src\renderer\scene_renderer.h" />
     <ClInclude Include="src\scene\entity.h" />

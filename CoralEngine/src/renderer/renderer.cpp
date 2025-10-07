@@ -5,8 +5,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include "data/mesh.h"
 
-//static RenderData _RenderData;
-RenderData RendererData{};
+static RenderData _RenderData{};
 
 void renderer_init_opengl()
 {
@@ -31,6 +30,10 @@ void renderer_init_opengl()
 	window_set_viewport_change_callback(renderer_change_viewport_callback);
 }
 
+const RenderData& get_renderer_data()
+{
+	return _RenderData;
+}
 
 void renderer_set_clear_color_normalized(float r, float g, float b)
 {
@@ -77,7 +80,7 @@ void renderer_set_face_culling_type(FaceCullingType type)
 void renderer_change_viewport_callback(int rWidth, int rHeight)
 {
 	glViewport(0, 0, rWidth, rHeight);
-	RendererData.ViewportSizePx = glm::vec2(rWidth, rHeight);
+	_RenderData.ViewportSizePx = glm::vec2(rWidth, rHeight);
 }
 
 void renderer_prepare_frame()

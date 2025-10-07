@@ -45,9 +45,6 @@
     <ClCompile Include="src\renderer\data\texture.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\material_table.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer\renderer.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -131,9 +128,6 @@
     <ClInclude Include="src\renderer\light\point_light.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\material_table.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer\renderer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -180,6 +174,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\assets\private\_assimp_mesh_importer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\memory_utils.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
