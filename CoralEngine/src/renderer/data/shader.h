@@ -17,6 +17,7 @@ typedef struct {
 typedef struct
 {
 	unsigned int Id;
+	unsigned int GenerationId;
 } ShaderHandle;
 
 void create_shader(Shader* rpShader, const char* rVertexShaderFile, const char* rFragmentShaderFile);

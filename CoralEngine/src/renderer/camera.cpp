@@ -15,8 +15,8 @@ void camera_update(CameraInfo* rpCamera)
 {
 	// First person flying camera
 	// Rotation
-	float deltaX = get_mouse_dx() * rpCamera->SensitivityX * get_delta_time();
-	float deltaY = get_mouse_dy() * rpCamera->SensitivityY * get_delta_time();
+	float deltaX = get_mouse_dx() * rpCamera->SensitivityX; // * get_delta_time();
+	float deltaY = get_mouse_dy() * rpCamera->SensitivityY; // * get_delta_time();
 
 	float yaw = rpCamera->Rotation.y + deltaX;
 	if (yaw >= 360.0f)

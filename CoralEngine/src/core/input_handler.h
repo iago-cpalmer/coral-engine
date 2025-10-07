@@ -14,7 +14,7 @@ enum class Input{
 	MoveDown,
 	MoveUp,
 	Escape,
-	
+
 	Count,
 };
 

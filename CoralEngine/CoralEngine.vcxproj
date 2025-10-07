@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -151,9 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\assets\public\assets_handler.cpp" />
+    <ClCompile Include="src\core\ErrorHandler.h" />
     <ClCompile Include="src\renderer\data\buffers\index_buffer.cpp" />
-    <ClCompile Include="src\assets\assets_handler.cpp" />
-    <ClCompile Include="src\assets\assimp_mesh_importer.cpp" />
+    <ClCompile Include="src\assets\private\_assets_handler.cpp" />
+    <ClCompile Include="src\assets\private\_assimp_mesh_importer.cpp" />
     <ClCompile Include="src\core\input_handler.cpp" />
     <ClCompile Include="src\core\time_manager.cpp" />
     <ClCompile Include="src\core\window.cpp" />
@@ -161,6 +163,7 @@
     <ClCompile Include="src\renderer\camera.cpp" />
     <ClCompile Include="src\renderer\data\material.cpp" />
     <ClCompile Include="src\renderer\data\mesh.cpp" />
+    <ClCompile Include="src\renderer\data\model.cpp" />
     <ClCompile Include="src\renderer\data\shader.cpp" />
     <ClCompile Include="src\renderer\data\texture.cpp" />
     <ClCompile Include="src\renderer\material_table.cpp" />
@@ -175,10 +178,12 @@
     <ClCompile Include="src\renderer\data\buffers\vertex_buffer_layout.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\assets\asset_handler_types.h" />
+    <ClInclude Include="src\assets\public\assets_handler.h" />
     <ClInclude Include="src\renderer\data\buffers\index_buffer.h" />
-    <ClInclude Include="src\assets\assets_handler.h" />
+    <ClInclude Include="src\assets\private\_assets_handler.h" />
     <ClInclude Include="src\assets\asset_list.h" />
-    <ClInclude Include="src\assets\assimp_mesh_importer.h" />
+    <ClInclude Include="src\assets\private\_assimp_mesh_importer.h" />
     <ClInclude Include="src\core\input_handler.h" />
     <ClInclude Include="src\core\time_manager.h" />
     <ClInclude Include="src\core\utils.h" />
@@ -187,6 +192,7 @@
     <ClInclude Include="src\renderer\camera.h" />
     <ClInclude Include="src\renderer\data\material.h" />
     <ClInclude Include="src\renderer\data\mesh.h" />
+    <ClInclude Include="src\renderer\data\model.h" />
     <ClInclude Include="src\renderer\data\shader.h" />
     <ClInclude Include="src\renderer\data\texture.h" />
     <ClInclude Include="src\renderer\light\directional_light.h" />

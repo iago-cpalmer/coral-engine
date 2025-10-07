@@ -60,12 +60,6 @@
     <ClCompile Include="src\scene\scene.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\assets\assets_handler.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\assets\assimp_mesh_importer.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="vendor\arena_allocator\arena_allocator.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -79,6 +73,21 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\data\buffers\vertex_buffer_layout.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\data\model.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\assets\public\assets_handler.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\assets\private\_assets_handler.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\assets\private\_assimp_mesh_importer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\ErrorHandler.h">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,13 +149,7 @@
     <ClInclude Include="src\meshes.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\assets\assets_handler.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="src\assets\asset_list.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\assets\assimp_mesh_importer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="vendor\arena_allocator\arena_allocator.h">
@@ -162,6 +165,21 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\renderer\data\buffers\vertex_buffer_layout.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\data\model.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\assets\asset_handler_types.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\assets\public\assets_handler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\assets\private\_assets_handler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\assets\private\_assimp_mesh_importer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

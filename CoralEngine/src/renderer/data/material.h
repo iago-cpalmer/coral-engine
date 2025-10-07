@@ -19,6 +19,7 @@ typedef struct
 typedef struct
 {
 	unsigned int Id;
+	unsigned int GenerationId;
 } MaterialHandle;
 
 #endif // !MATERIAL_H

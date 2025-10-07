@@ -1,6 +1,7 @@
 #include "scene.h"
 #include "../renderer/scene_renderer.h"
-#include "../assets/assets_handler.h"
+#include "../assets/public/assets_handler.h"
+//#include "../../assets/assets_handler.h"
 
 void init_scene(Scene* rpScene)
 {
@@ -38,7 +39,8 @@ void scene_render(Scene* rpScene)
 			transform = glm::rotate(transform, entity->Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 			transform = glm::translate(transform, entity->Position);
 			
-			draw_mesh(entity->p_Mesh, transform, entity->p_Material, entity->MaterialCount);
+			Model* model = ah_get_model(entity->meshRendererData.ModelHandle);
+			draw_mesh(model->p_Mesh, transform, model->p_MaterialHandles, model->MaterialCount);
 		}
 	}
 }

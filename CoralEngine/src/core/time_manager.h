@@ -1,7 +1,7 @@
 #ifndef TIME_MANAGER_H
 #define TIME_MANAGER_H
 
-void calculate_delta_time(double rCurrentTime);
+bool calculate_delta_time(double rCurrentTime, double desiredFrameRate);
 
 double get_delta_time();
 

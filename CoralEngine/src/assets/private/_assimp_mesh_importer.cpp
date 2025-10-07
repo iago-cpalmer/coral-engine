@@ -1,7 +1,7 @@
-#include "assimp_mesh_importer.h"
+#include "_assimp_mesh_importer.h"
 
 #include <iostream>
-#include "assets_handler.h"
+#include "../public/assets_handler.h"
 
 static std::vector<Vertex> s_Vertices;
 static std::vector<unsigned int> s_Indices;
@@ -11,7 +11,7 @@ static unsigned int s_SubmeshCount = 0;
 static unsigned int s_TotalIndexCount = 0;
 static unsigned int s_TotalVertexCount = 0;
 
-void import_model(Mesh* rp_mesh, std::string r_path)
+void import_model(Model* rp_model, std::string r_path)
 {
     Assimp::Importer importer;
 
@@ -41,23 +41,23 @@ void import_model(Mesh* rp_mesh, std::string r_path)
         vertexCount += scene->mMeshes[i]->mNumVertices;
         indexCount += scene->mMeshes[i]->mNumFaces*3;
     }
-
-    create_mesh(rp_mesh, vertexAttributes, 3, nullptr, vertexCount, nullptr, indexCount, scene->mNumMeshes, GL_STATIC_DRAW);
+    rp_model->p_Mesh = (Mesh*)malloc(sizeof(Mesh));
+    create_mesh(rp_model->p_Mesh, vertexAttributes, 3, nullptr, vertexCount, nullptr, indexCount, scene->mNumMeshes, GL_STATIC_DRAW);
     // ^^^ ---------------------------
 
     s_SubmeshCount = 0;
     s_TotalIndexCount = 0;
     s_TotalVertexCount = 0;
     
-    process_node(scene->mRootNode, scene, rp_mesh);
+    process_node(scene->mRootNode, scene, rp_model);
 }
 
-void process_node(aiNode* rp_node, const aiScene* rp_scene, Mesh* rp_mesh)
+void process_node(aiNode* rp_node, const aiScene* rp_scene, Model* rp_model)
 {
    
     for (int i = 0; i < rp_node->mNumMeshes; i++)
     {
-        process_mesh(rp_scene->mMeshes[rp_node->mMeshes[i]], rp_scene, rp_mesh);
+        process_mesh(rp_scene->mMeshes[rp_node->mMeshes[i]], rp_scene, rp_model);
     }
 
     if (rp_node->mChildren == nullptr)
@@ -67,12 +67,12 @@ void process_node(aiNode* rp_node, const aiScene* rp_scene, Mesh* rp_mesh)
 
     for (int i = 0; i < rp_node->mNumChildren; i++)
     {
-        process_node(rp_node->mChildren[i], rp_scene, rp_mesh);
+        process_node(rp_node->mChildren[i], rp_scene, rp_model);
     }
 
 }
 
-void process_mesh(aiMesh* rp_aiMesh, const aiScene* rp_scene, Mesh* rp_mesh)
+void process_mesh(aiMesh* rp_aiMesh, const aiScene* rp_scene, Model* rp_model)
 {
     Mesh mesh = { 0 };
     
@@ -90,6 +90,8 @@ void process_mesh(aiMesh* rp_aiMesh, const aiScene* rp_scene, Mesh* rp_mesh)
         vertex.Position.y = rp_aiMesh->mVertices[i].y;
         vertex.Position.z = rp_aiMesh->mVertices[i].z;
 
+        // TODO: If no normals, generate them from vertices
+        // Now it is done like this to avoid a crash
         if (rp_aiMesh->mNormals != NULL)
         {
             vertex.Normal.x = rp_aiMesh->mNormals[i].x;
@@ -132,16 +134,20 @@ void process_mesh(aiMesh* rp_aiMesh, const aiScene* rp_scene, Mesh* rp_mesh)
         }
     }
 
-    // TODO: this material should already be created with the external asset creator
-    // in the asset_handler's material table
+
+    // TODO: Add option to not load any materials nor textures so the game can handle it on its own
+    // Otherwise: Texture should be registered inside the assets handler and material
+    // When unloading the material, make sure the texture is also unloaded (and unregistered)
     Material meshMaterial;
     if (rp_aiMesh->mMaterialIndex >= 0)
     {
         //meshMaterial = ah_create_material();
-        meshMaterial.Shader = ah_get_shader_handle(ShaderName::basic_shader);
-        // TODO: the texture from the material should be added in the asset handler's texture table
-        // on the external asset creator
-        meshMaterial.AlbedoMap = ah_get_texture_handle(TextureName::container);
+        // Always use default shader by default
+        //meshMaterial.Shader = ah_get_shader_handle(ShaderName::basic_shader);
+
+        // TODO: use default texture if no material/ texture
+        //meshMaterial.AlbedoMap = ah_get_texture_handle(TextureName::container);
+
         aiMaterial* material = rp_scene->mMaterials[rp_aiMesh->mMaterialIndex];
         aiColor3D color(0.0f, 0.0f, 0.0f);
         float shininess;
@@ -163,11 +169,11 @@ void process_mesh(aiMesh* rp_aiMesh, const aiScene* rp_scene, Mesh* rp_mesh)
         // TODO: add default material
         //meshMaterial = DEFAULT_MAT;
     }
+    Mesh* p_Mesh = rp_model->p_Mesh;
+    vbo_set_data(p_Mesh->Vbo, s_Vertices.data(), sizeof(Vertex) * vertexCount, s_TotalVertexCount);
+    ibo_set_data(p_Mesh->Ibo, s_Indices.data(), sizeof(unsigned int) * indexCount, s_TotalIndexCount);
 
-    vbo_set_data(rp_mesh->Vbo, s_Vertices.data(), sizeof(Vertex) * vertexCount, s_TotalVertexCount);
-    ibo_set_data(rp_mesh->Ibo, s_Indices.data(), sizeof(unsigned int) * indexCount, s_TotalIndexCount);
-
-    rp_mesh->Submeshes[s_SubmeshCount] = Submesh{ s_TotalIndexCount, indexCount };
+    p_Mesh->Submeshes[s_SubmeshCount] = Submesh{ s_TotalIndexCount, indexCount };
     //TODO: rp_mesh->Materials[s_SubmeshCount] = meshMaterial;
     
     s_TotalIndexCount += indexCount;

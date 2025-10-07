@@ -12,6 +12,7 @@ typedef struct
 typedef struct
 {
 	unsigned int Id;
+	unsigned int GenerationId;
 } TextureHandle;
 
 

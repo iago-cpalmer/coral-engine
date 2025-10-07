@@ -37,7 +37,7 @@ typedef struct
 typedef struct
 {
 	unsigned int Id;
-} ModelHandle;
+} MeshHandle;
 
 void create_mesh(Mesh* rpMesh, VertexAttribute* rVertexAttributes, int rVertexAttrCount, float* rVertices, int rVertexCount, unsigned int* rIndices, int rIndexCount, int r_subMeshCount, GLenum rUsage);
 

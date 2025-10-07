@@ -2,10 +2,18 @@
 static double _DeltaTime;
 static double _PrevFrameTime;
 
-void calculate_delta_time(double rCurrentTime)
+bool calculate_delta_time(double rCurrentTime, double desiredFrameRate)
 {
 	_DeltaTime = rCurrentTime - _PrevFrameTime;
-	_PrevFrameTime = rCurrentTime;
+	if (_DeltaTime <= (1.0f / desiredFrameRate)) 
+	{
+		return false;
+	}
+	else
+	{
+		_PrevFrameTime = rCurrentTime;
+		return true;
+	}
 }
 
 double get_delta_time()

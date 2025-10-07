@@ -8,7 +8,8 @@
 #include "light/directional_light.h"
 
 #include "renderer.h"
-#include "../assets/assets_handler.h"
+#include "../assets/public/assets_handler.h"
+//#include "../assets/public/assets_handler.h"
 
 
 static CameraInfo* sp_Camera;
@@ -47,7 +48,7 @@ void begin_render(Scene* rp_Scene, CameraInfo* rpCamera)
 	}*/
 }
 
-void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform, Material* r_materials, unsigned int r_matCount)
+void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform, MaterialHandle* r_materials, unsigned int r_matCount)
 {
 	LightEnvironment* pLights = &sp_CurrentScene->SceneRenderData.LightEnv;
 	for (unsigned int i = 0; i < rp_mesh->SubmeshCount; i++)
@@ -57,7 +58,7 @@ void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform, Material* r_materials, un
 		// TODO: all this uniforms should become part of uniform buffers
 		// to avoid writing same uniforms multiple times
 		assert(r_matCount == 1 || r_matCount == rp_mesh->SubmeshCount, "ERROR::Draw_Mesh - No general material used, expected then same number of materials than submeshes\n");
-		Material& mat = r_materials[r_matCount == 1 ? 0 : r_matCount];
+		Material& mat = *ah_get_material(r_materials[r_matCount == 1 ? 0 : r_matCount]);
 		Shader* shader = ah_get_shader(mat.Shader);
 		use_shader(shader);
 

@@ -41,6 +41,7 @@ void create_texture(Texture* rpTexture, const char* rPath)
 	}
 	stbi_image_free(data);
 
+	rpTexture->NrChannels = nChannels;
 	rpTexture->Width = width;
 	rpTexture->Height = height;
 	rpTexture->Texture = textureId;

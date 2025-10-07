@@ -22,14 +22,18 @@
 #include "scene/entity.h"
 #include "scene/scene.h"
 
-#include "assets/assets_handler.h"
+#include "assets/public/assets_handler.h"
+#include "assets/asset_list.h"
+
+const float DESIRED_FPS = 120;
 
 int main()
 {
-	if (create_window(800, 600, "Graphics Playground") == -1)
+	if (create_window(800, 600, "Coral Engine") == -1)
 	{
 		return -1;
 	}
+	glfwSwapInterval(0);
 	renderer_init_opengl();
 	renderer_set_clear_color(0, 181, 226);
 
@@ -41,8 +45,8 @@ int main()
 	camera.Position = glm::vec3(0.0f, 0.0f, 6.0f);
 	camera.Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 	camera.Fov = 45.0f;
-	camera.SensitivityX = 1000.0f;
-	camera.SensitivityY = 1500.0f;
+	camera.SensitivityX = 10.0f;
+	camera.SensitivityY = 15.0f;
 	camera.MovementSpeed = 10.0f;
 	camera.NearPlane = 0.1f;
 	camera.FarPlane = 100.0f;
@@ -53,53 +57,66 @@ int main()
 	init_scene(&scene);
 	scene_set_camera(&scene, &camera);
 
-	ah_load_assets();
+	al_load_all_assets();
 
 	// vvv Mesh creation --------------
+#pragma region BACKPACK_DEFINITION
+	// Backpack
+	Entity backpackEntity;
+	backpackEntity.meshRendererData.ModelHandle = al_get_model_handle(ModelName::backpack);
+	backpackEntity.Position = glm::vec3(10, 0, 0);
+	backpackEntity.Rotation = glm::vec3(0, 0, 0);
+	backpackEntity.Scale = glm::vec3(0.25f);
+	//instantiate_entity(&scene, &backpackEntity);
+#pragma endregion	
+
+#pragma region CUBE_DEFINITION
+	// vvv ----------------------------
+	// Cube
+	Entity cubeEntity;
+	cubeEntity.meshRendererData.ModelHandle = al_get_model_handle(ModelName::backpack);
+	cubeEntity.Position = glm::vec3(0);
+	cubeEntity.Rotation = glm::vec3(0, 0, 0);
+	cubeEntity.Scale = glm::vec3(0.25f);
+
+	// --- Definition of material --------
+	Material cubeMat;
+	cubeMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	cubeMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+	cubeMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	cubeMat.Shininess = 32.0f;
+	cubeMat.Shader = al_get_shader_handle(ShaderName::basic_shader);
+	cubeMat.AlbedoMap = al_get_texture_handle(TextureName::container);
+	// -----------------------------------
+	
+
+	// --- Definition of mesh ------------
 	VertexAttribute vertexAttributes[] =
 	{
 		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Position
 		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Normal
 		VertexAttribute{VertexAttributeType::FLOAT, 2}		// UV
 	};
+	Mesh cubeMesh;
+	create_mesh(&cubeMesh, vertexAttributes, 3, VERTICES_CUBE, 24, INDICES_CUBE, 36, 1, GL_STATIC_DRAW);
+	cubeMesh.Submeshes[0] = { 0, 36 };
+	// -----------------------------------
 
-	//Mesh mesh;
-	//create_mesh(&mesh, vertexAttributes, 3, VERTICES_CUBE, 24, INDICES_CUBE, 36, 1, GL_STATIC_DRAW);
-	//mesh.Submeshes[0] = { 0, 36 };
-	//Material defMat;
-	//defMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
-	//defMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
-	//defMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
-	//defMat.Shininess = 32.0f;
-	//defMat.Shader = ah_get_shader_handle(ShaderName::BASIC_SHADER);
-	//defMat.AlbedoMap = ah_get_texture_handle(TextureName::CONTAINER);
+	Model cubeModel;
+	cubeModel.p_Mesh = &cubeMesh;
+	cubeModel.MaterialCount = 1;
+	cubeModel.p_MaterialHandles = (MaterialHandle*)malloc(sizeof(MaterialHandle) * cubeModel.MaterialCount);
+	cubeModel.p_MaterialHandles[0] = ah_register_material(&cubeMat);
 
-	//mesh.Materials[0] = defMat;
-
-	Entity cubeEntity;
-	//cubeEntity.p_Mesh = &mesh;
-	cubeEntity.p_Mesh = ah_get_model(ah_get_model_handle(ModelName::backpack));
-	cubeEntity.Position = glm::vec3(0);
-	cubeEntity.Rotation = glm::vec3(0, 0, 0);
-	cubeEntity.Scale = glm::vec3(0.25f);
-
-	Material cubeMat;
-	cubeMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
-	cubeMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
-	cubeMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
-	cubeMat.Shininess = 32.0f;
-	cubeMat.Shader = ah_get_shader_handle(ShaderName::basic_shader);
-	cubeMat.AlbedoMap = ah_get_texture_handle(TextureName::container);
-
-	cubeEntity.p_Material = &cubeMat;
-	cubeEntity.MaterialCount = 1;
+	ModelHandle cubeModelHandle = ah_register_model(&cubeModel);
+	cubeEntity.meshRendererData.ModelHandle = cubeModelHandle;
 
 	instantiate_entity(&scene, &cubeEntity);
-
 	// ^^^ ----------------------------
+#pragma endregion
 
-	// vvv Light plane ----------------
-	
+	// vvv ----------------------------
+	// Light plane
 	VertexAttribute vertexAttributesLight[] =
 	{
 		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Position
@@ -109,25 +126,31 @@ int main()
 	Mesh lightPlane;
 	create_mesh(&lightPlane, vertexAttributesLight, 2, VERTICES_PLANE, 4, INDICES_PLANE, 6, 1, GL_STATIC_DRAW);
 	lightPlane.Submeshes[0] = { 0, 6 };
+	
 	Material lightMat;
 	lightMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 	lightMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
 	lightMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	lightMat.Shininess = 32.0f;
-	lightMat.Shader = ah_get_shader_handle(ShaderName::light_shader);
-	lightMat.AlbedoMap = ah_get_texture_handle(TextureName::point_light);
-
-	// TODO: Remove lightPlane.Materials[0] = lightMat;
+	lightMat.Shader = al_get_shader_handle(ShaderName::light_shader);
+	lightMat.AlbedoMap = al_get_texture_handle(TextureName::point_light);
+	MaterialHandle matLightHandle = ah_register_material(&lightMat);
 
 	Entity lightSourceEntity;
-	lightSourceEntity.p_Mesh = &lightPlane;
 	lightSourceEntity.Position = glm::vec3(0);
 	lightSourceEntity.Rotation = glm::vec3(0);
 	lightSourceEntity.Scale = glm::vec3(1);
-	lightSourceEntity.p_Material = &lightMat;
-	lightSourceEntity.MaterialCount = 1;
 
-	//instantiate_entity(&scene, &lightSourceEntity);
+	Model lightSourceModel;
+	lightSourceModel.p_Mesh = &lightPlane;
+	lightSourceModel.MaterialCount = 1;
+	lightSourceModel.p_MaterialHandles = (MaterialHandle*)malloc(sizeof(MaterialHandle));
+	lightSourceModel.p_MaterialHandles[0] = matLightHandle;
+
+	ModelHandle lightModelHandle = ah_register_model(&lightSourceModel);
+	lightSourceEntity.meshRendererData.ModelHandle = lightModelHandle;
+
+	instantiate_entity(&scene, &lightSourceEntity);
 	
 
 	PointLight pointLight;
@@ -153,7 +176,7 @@ int main()
 	while (!window_should_close())
 	{
 #pragma region region_time_and_input
-		calculate_delta_time(window_get_time_since_start());
+		if(!calculate_delta_time(window_get_time_since_start(), DESIRED_FPS)) continue;
 		update_input();
 #pragma endregion
 
