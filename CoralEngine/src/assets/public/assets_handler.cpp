@@ -46,6 +46,16 @@ Model* ah_get_model(ModelHandle handle)
     return _get_model(handle);
 }
 
+void ah_unregister_model(ModelHandle handle)
+{
+    ModelData& data = _get_model_data(handle);
+    // This should be true here as error is handled inside the prev function
+    if (data.GenerationId == handle.GenerationId)
+    {
+        data.GenerationId |= INVALID_GENERATION_MASK;
+    }
+}
+
 TextureHandle ah_register_texture(const Asset& asset, const AssetLoadType loadingType)
 {
     TextureHandle handle = _register_new_texture();
@@ -82,6 +92,15 @@ Texture* ah_get_texture(TextureHandle handle)
     return _get_texture(handle);
 }
 
+void ah_unregister_texture(TextureHandle handle)
+{
+    TextureData& data = _get_texture_data(handle);
+    // This should be true here as error is handled inside the prev function
+    if (data.GenerationId == handle.GenerationId)
+    {
+        data.GenerationId |= INVALID_GENERATION_MASK;
+    }
+}
 
 ShaderHandle ah_register_shader(const ShaderAsset& asset, const AssetLoadType loadingType)
 {
@@ -119,6 +138,15 @@ Shader* ah_get_shader(ShaderHandle handle)
     return _get_shader(handle);
 }
 
+void ah_unregister_shader(ShaderHandle handle)
+{
+    ShaderData& data = _get_shader_data(handle);
+    // This should be true here as error is handled inside the prev function
+    if (data.GenerationId == handle.GenerationId)
+    {
+        data.GenerationId |= INVALID_GENERATION_MASK;
+    }
+}
 
 MaterialHandle ah_register_material(Material* pMaterial)
 {
@@ -131,4 +159,14 @@ MaterialHandle ah_register_material(Material* pMaterial)
 Material* ah_get_material(MaterialHandle handle)
 {
     return _get_material(handle);
+}
+
+void ah_unregister_material(MaterialHandle handle)
+{
+    MaterialData& data = _get_material_data(handle);
+    // This should be true here as error is handled inside the prev function
+    if (data.GenerationId == handle.GenerationId)
+    {
+        data.GenerationId |= INVALID_GENERATION_MASK;
+    }
 }

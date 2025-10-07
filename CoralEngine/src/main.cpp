@@ -79,6 +79,12 @@ int main()
 	cubeEntity.Rotation = glm::vec3(0, 0, 0);
 	cubeEntity.Scale = glm::vec3(0.25f);
 
+	Entity cube2Entity;
+	cube2Entity.meshRendererData.ModelHandle = al_get_model_handle(ModelName::backpack);
+	cube2Entity.Position = glm::vec3(3, 0, 0);
+	cube2Entity.Rotation = glm::vec3(0, 0, 0);
+	cube2Entity.Scale = glm::vec3(0.25f);
+
 	// --- Definition of material --------
 	Material cubeMat;
 	cubeMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -111,7 +117,10 @@ int main()
 	ModelHandle cubeModelHandle = ah_register_model(&cubeModel);
 	cubeEntity.meshRendererData.ModelHandle = cubeModelHandle;
 
+	cube2Entity.meshRendererData.ModelHandle = cubeModelHandle;
+
 	instantiate_entity(&scene, &cubeEntity);
+	instantiate_entity(&scene, &cube2Entity);
 	// ^^^ ----------------------------
 #pragma endregion
 

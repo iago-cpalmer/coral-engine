@@ -15,6 +15,14 @@ typedef struct
 	glm::vec2 ViewportSizePx;
 } RenderData;
 
+enum class FaceCullingType
+{
+	NONE = 0,
+	BACK,
+	FRONT,
+	FRONT_AND_BACK
+};
+
 // TODO: this renderer data should not be global. It should be static inside the cpp file.
 // Now is done this way as it's needed in main.cpp, inside the main loop, to pass matrices
 // to shaders.
@@ -24,6 +32,12 @@ void renderer_init_opengl();
 
 void renderer_set_clear_color_normalized(float r, float g, float b);
 void renderer_set_clear_color(float r, float g, float b);
+
+/// <summary>
+/// Sets face culling type. By default enabled and set to cull only back faces
+/// </summary>
+/// <param name="type"></param>
+void renderer_set_face_culling_type(FaceCullingType type);
 
 void renderer_prepare_frame();
 void renderer_finish_render();

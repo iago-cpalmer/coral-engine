@@ -22,6 +22,12 @@ void renderer_init_opengl()
 
 	glEnable(GL_DEPTH_TEST);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
 	window_set_viewport_change_callback(renderer_change_viewport_callback);
 }
 
@@ -36,6 +42,37 @@ void renderer_set_clear_color(float r, float g, float b)
 	glClearColor(r / 256.0f, g / 256.0f, b / 256.0f, 1.0f);
 }
 
+void renderer_set_face_culling_type(FaceCullingType type)
+{
+	switch (type)
+	{
+		case FaceCullingType::NONE:
+		{
+			glDisable(GL_CULL_FACE);
+		} break;
+
+		case FaceCullingType::FRONT:
+		{
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_FRONT);
+		} break;
+
+		case FaceCullingType::BACK:
+		{
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
+		} break;
+
+		case FaceCullingType::FRONT_AND_BACK:
+		{
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_FRONT_AND_BACK);
+		} break;
+
+		default:
+			break;
+	}
+}
 
 void renderer_change_viewport_callback(int rWidth, int rHeight)
 {
