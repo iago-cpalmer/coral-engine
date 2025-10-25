@@ -25,6 +25,7 @@
 #include "assets/public/assets_handler.h"
 #include "assets/asset_list.h"
 #include "core/memory_utils.h"
+#include "renderer/data/buffers/frame_buffer.h"
 
 const float DESIRED_FPS = 120;
 
@@ -182,6 +183,52 @@ int main()
 	add_directional_light(&scene, &directionalLight);
 	add_point_light(&scene, &pointLight);
 
+	// ----- Mirror
+	// TODO: Attach frame buffers to cameras as render targets
+	Texture mirrorTexture;
+	create_texture(&mirrorTexture, 4, 800, 600);
+	RenderBuffer rb = create_rb(GL_DEPTH24_STENCIL8, 800, 600);
+	FrameBuffer testFb = create_fb(&mirrorTexture);
+	fb_attach_rb(&testFb, &rb);
+
+	// --- Definition of mesh ------------
+	VertexAttribute vertexAttributesMirror[] =
+	{
+		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Position
+		VertexAttribute{VertexAttributeType::FLOAT, 3},	// Texture
+		VertexAttribute{VertexAttributeType::FLOAT, 2}		// UV
+	};
+	Mesh mirrorMesh;
+	create_mesh(&mirrorMesh, vertexAttributesMirror, 3, VERTICES_CUBE, 24, INDICES_CUBE, 36, 1, GL_STATIC_DRAW);
+	mirrorMesh.Submeshes[0] = { 0, 36 };
+
+	Material mirrorMat;
+	mirrorMat.Ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	mirrorMat.Diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+	mirrorMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	mirrorMat.Shininess = 32.0f;
+	mirrorMat.Shader = al_get_shader_handle(ShaderName::basic_shader);
+	mirrorMat.AlbedoMap = ah_register_texture(&mirrorTexture);
+	//mirrorMat.AlbedoMap = al_get_texture_handle(TextureName::container);
+
+	Model mirrorModel;
+	mirrorModel.p_Mesh = &mirrorMesh;
+	mirrorModel.MaterialCount = 1;
+	mirrorModel.p_MaterialHandles = (MaterialHandle*)CE_MALLOC(sizeof(MaterialHandle) * mirrorModel.MaterialCount);
+	mirrorModel.p_MaterialHandles[0] = ah_register_material(&mirrorMat);
+
+	ModelHandle mirrorModelHandle = ah_register_model(&mirrorModel);
+
+	Entity mirrorEntity;
+	mirrorEntity.meshRendererData.ModelHandle = mirrorModelHandle;
+	mirrorEntity.Position = glm::vec3(0, 0, 3);
+	mirrorEntity.Rotation = glm::vec3(0, 0, 0);
+	mirrorEntity.Scale = glm::vec3(1.0f);
+	
+	mirrorEntity.meshRendererData.ModelHandle = mirrorModelHandle;
+
+	instantiate_entity(&scene, &mirrorEntity);
+
 	// ^^^ ----------------------------
 	while (!window_should_close())
 	{
@@ -220,6 +267,13 @@ int main()
 		// ^^^ ------------------------
 
 #pragma endregion
+
+		// draw to fn
+		use_fb(testFb);
+		renderer_prepare_frame();
+		scene_render(&scene);
+		fb_unbind(testFb);
+		// end draw to fb
 
 		renderer_prepare_frame();
 

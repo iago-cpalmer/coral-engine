@@ -87,6 +87,12 @@
     <ClCompile Include="src\core\ErrorHandler.h">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\data\buffers\render_buffer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\data\buffers\frame_buffer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendor\glad\include\glad\glad.h">
@@ -177,6 +183,12 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\core\memory_utils.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\data\buffers\render_buffer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\data\buffers\frame_buffer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

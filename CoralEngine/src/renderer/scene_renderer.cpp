@@ -25,7 +25,7 @@ void begin_render(Scene* rp_Scene, CameraInfo* rpCamera)
 	
 	_calculate_view_matrix();
 	_calculate_projection_matrix();
-	/*
+	/*// TODO: all this uniforms should become part of uniform buffers
 	// write all uniforms to shaders
 	LightEnvironment* pLights = &sp_CurrentScene->SceneRenderData.LightEnv;
 

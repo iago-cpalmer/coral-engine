@@ -18,7 +18,12 @@ typedef struct
 
 void create_texture(Texture* rpTexture, const char* rPath);
 
-void use_texture(Texture* rpTexture);
+void create_texture(Texture* rpTexture, int n_channels, int width, int height);
+
+inline void use_texture(Texture* rpTexture)
+{
+	glBindTexture(GL_TEXTURE_2D, rpTexture->Texture);
+}
 
 
 #endif // !TEXTURE_H

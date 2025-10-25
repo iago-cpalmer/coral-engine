@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\renderer\data\buffers\render_buffer.cpp" />
+    <ClCompile Include="src\renderer\data\buffers\frame_buffer.cpp" />
     <ClCompile Include="src\assets\public\assets_handler.cpp" />
     <ClCompile Include="src\core\ErrorHandler.h" />
     <ClCompile Include="src\renderer\data\buffers\index_buffer.cpp" />
@@ -177,6 +179,8 @@
     <ClCompile Include="src\renderer\data\buffers\vertex_buffer_layout.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderer\data\buffers\render_buffer.h" />
+    <ClInclude Include="src\renderer\data\buffers\frame_buffer.h" />
     <ClInclude Include="src\assets\asset_handler_types.h" />
     <ClInclude Include="src\assets\public\assets_handler.h" />
     <ClInclude Include="src\core\memory_utils.h" />

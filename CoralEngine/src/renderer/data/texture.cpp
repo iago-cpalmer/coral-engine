@@ -45,11 +45,35 @@ void create_texture(Texture* rpTexture, const char* rPath)
 	rpTexture->Width = width;
 	rpTexture->Height = height;
 	rpTexture->Texture = textureId;
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-
-void use_texture(Texture* rpTexture)
+void create_texture(Texture* rpTexture, int n_channels, int width, int height)
 {
-	glBindTexture(GL_TEXTURE_2D, rpTexture->Texture);
+	unsigned int textureId;
+	glGenTextures(1, &textureId);
+
+	glBindTexture(GL_TEXTURE_2D, textureId);
+
+	// Set wrapping and filtering options
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (n_channels == 3)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+	}
+	else
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+	}
+
+	rpTexture->NrChannels = n_channels;
+	rpTexture->Width = width;
+	rpTexture->Height = height;
+	rpTexture->Texture = textureId;
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
 
