@@ -185,11 +185,9 @@ int main()
 
 	// ----- Mirror
 	// TODO: Attach frame buffers to cameras as render targets
-	Texture mirrorTexture;
-	create_texture(&mirrorTexture, 4, 800, 600);
-	RenderBuffer rb = create_rb(GL_DEPTH24_STENCIL8, 800, 600);
-	FrameBuffer testFb = create_fb(&mirrorTexture);
-	fb_attach_rb(&testFb, &rb);
+	//RenderBuffer rb = create_rb(GL_DEPTH24_STENCIL8, 800, 600);
+	FrameBuffer testFb = create_fb(FbRenderTargetType::Texture, 800, 600, 3);
+	fb_create_rb_for_depth(&testFb, GL_DEPTH24_STENCIL8, 800, 600);
 
 	// --- Definition of mesh ------------
 	VertexAttribute vertexAttributesMirror[] =
@@ -208,7 +206,7 @@ int main()
 	mirrorMat.Specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	mirrorMat.Shininess = 32.0f;
 	mirrorMat.Shader = al_get_shader_handle(ShaderName::basic_shader);
-	mirrorMat.AlbedoMap = ah_register_texture(&mirrorTexture);
+	mirrorMat.AlbedoMap = testFb.ColorTarget.Texture;
 	//mirrorMat.AlbedoMap = al_get_texture_handle(TextureName::container);
 
 	Model mirrorModel;

@@ -6,9 +6,24 @@
 #include "../texture.h"
 #include "render_buffer.h"
 
+enum class FbRenderTargetType
+{
+    Texture,
+    RenderBuffer
+};
+
 typedef struct
 {
     unsigned int Id;
+
+    FbRenderTargetType RenderTargetType;
+    union
+    {
+        TextureHandle Texture;
+        RenderBuffer RenderBuffer;
+    } ColorTarget;
+    RenderBuffer DepthTarget;
+    
 } FrameBuffer;
 
 /// <summary>
@@ -18,10 +33,10 @@ typedef struct
 /// <param name="rp_data">Data to be set on init. If nullptr, buffer will be "empty"</param>
 /// <param name="r_usage">Set usage of buffer</param>
 /// <returns>Index buffer</returns>
-FrameBuffer create_fb(const Texture* p_texture);
-//FrameBuffer create_fb(const Texture* p_texture);
+FrameBuffer create_fb(FbRenderTargetType type, const int width, const int height, const int nChannels);
 
-void fb_attach_rb(FrameBuffer* fb, RenderBuffer* rb);
+void fb_create_rb_for_depth(FrameBuffer* fb, GLenum format, int width, int height);
+void _fb_attach_rb(FrameBuffer* fb, RenderBuffer* rb);
 
 inline void use_fb(const FrameBuffer& r_fb)
 {

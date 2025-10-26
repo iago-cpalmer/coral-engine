@@ -25,5 +25,7 @@ inline void use_texture(Texture* rpTexture)
 	glBindTexture(GL_TEXTURE_2D, rpTexture->Texture);
 }
 
+void release_texture(Texture* pTexture);
+
 
 #endif // !TEXTURE_H

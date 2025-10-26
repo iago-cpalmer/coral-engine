@@ -5,6 +5,6 @@
 #define CE_MALLOC(x) malloc(x)
 
 // TODO: implement own dealloc
-#define CE_DEALLOC(x) dealloc(x)
+#define CE_DEALLOC(x) free(x)
 
 #endif // !MEMORY_UTILS_H

@@ -76,4 +76,9 @@ void create_texture(Texture* rpTexture, int n_channels, int width, int height)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void release_texture(Texture* pTexture)
+{
+	glDeleteTextures(1, &pTexture->Texture);
+}
+
 

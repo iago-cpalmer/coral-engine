@@ -1,5 +1,7 @@
 #include "render_buffer.h"
 
+static const RenderBuffer NULL_RENDER_BUFFER{ 0 };
+
 RenderBuffer create_rb(GLenum format, int width, int height)
 {
 	RenderBuffer rb = { 0 };
@@ -10,4 +12,14 @@ RenderBuffer create_rb(GLenum format, int width, int height)
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 	return rb;
+}
+
+void release_rb(RenderBuffer* rb)
+{
+	glDeleteRenderbuffers(1, &rb->Id);
+}
+
+bool rb_is_null(RenderBuffer& rb)
+{
+	return rb.Format == NULL_RENDER_BUFFER.Format && rb.Id == NULL_RENDER_BUFFER.Id;
 }
