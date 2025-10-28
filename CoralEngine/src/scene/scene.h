@@ -8,6 +8,7 @@
 #include "../renderer/light/point_light.h"
 
 #define MAX_ENTITIES 10
+#define MAX_CAMERAS 10
 
 typedef struct
 {
@@ -24,20 +25,24 @@ typedef struct
 
 typedef struct {
 	std::string SceneName;
-	
-	CameraInfo* p_Camera;
+	SceneRenderingData SceneRenderData;
 
+	unsigned int MainCamera;
+	unsigned int NumberOfCameras;
 	// TODO: change way to store entities
 	Entity* Entities[MAX_ENTITIES];
 	int NumberOfEntities;
 	// ^^^
-
-	SceneRenderingData SceneRenderData;
+	CameraInfo* Cameras[MAX_CAMERAS];
 } Scene;
 
 void init_scene(Scene* rpScene);
 
-void scene_set_camera(Scene* rpScene, CameraInfo* rpCamera);
+void scene_add_camera(Scene* rpScene, CameraInfo *pCamera);
+
+void scene_set_main_camera(Scene* rpScene, unsigned int id);
+
+void scene_remove_camera(Scene* rpScene, unsigned int id);
 
 void scene_update(Scene* rpScene);
 

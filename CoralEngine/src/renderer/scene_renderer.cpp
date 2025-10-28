@@ -25,6 +25,12 @@ void begin_render(Scene* rp_Scene, CameraInfo* rpCamera)
 	
 	_calculate_view_matrix();
 	_calculate_projection_matrix();
+
+	if (rpCamera->RenderTarget == RenderTargetType::Texture)
+	{
+		use_fb(*rpCamera->FrameBuffer);
+		renderer_prepare_frame();
+	}
 	/*// TODO: all this uniforms should become part of uniform buffers
 	// write all uniforms to shaders
 	LightEnvironment* pLights = &sp_CurrentScene->SceneRenderData.LightEnv;
@@ -46,6 +52,11 @@ void begin_render(Scene* rp_Scene, CameraInfo* rpCamera)
 			shader_set_projection_matrix(pShader, s_ProjectionMatrix);
 		}
 	}*/
+}
+
+void end_render()
+{
+	fb_unbind();
 }
 
 void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform, MaterialHandle* r_materials, unsigned int r_matCount)

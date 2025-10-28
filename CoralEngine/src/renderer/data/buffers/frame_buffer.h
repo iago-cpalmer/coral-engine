@@ -43,7 +43,7 @@ inline void use_fb(const FrameBuffer& r_fb)
     glBindFramebuffer(GL_FRAMEBUFFER, r_fb.Id);
 }
 
-inline void fb_unbind(const FrameBuffer& r_fb)
+inline void fb_unbind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

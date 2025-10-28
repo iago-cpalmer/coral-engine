@@ -36,7 +36,7 @@ FrameBuffer create_fb(FbRenderTargetType type, const int width, const int height
 		THROW_ERROR("ERROR::create_fb - Frame buffer was not created correctly");
 	}
 
-	fb_unbind(fb);
+	fb_unbind();
 
 	return fb;
 }
@@ -64,7 +64,7 @@ void _fb_attach_rb(FrameBuffer* fb, RenderBuffer* rb)
 		default:
 			THROW_ERROR("ERROR::fb_attach_rb - Not supported format of render buffer object");
 	}
-	fb_unbind(*fb);
+	fb_unbind();
 }
 
 void release_fb(FrameBuffer& r_fb)

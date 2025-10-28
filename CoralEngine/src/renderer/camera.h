@@ -12,7 +12,7 @@ enum class ProjectionType
 	Orthogonal
 };
 
-enum class RenderTarget
+enum class RenderTargetType
 {
 	Screen,
 	Texture
@@ -20,6 +20,7 @@ enum class RenderTarget
 
 typedef struct
 {
+	unsigned int CameraIdInScene;
 	ProjectionType Projection;
 	glm::vec3 Position;
 	glm::vec3 Rotation;
@@ -34,7 +35,9 @@ typedef struct
 	float NearPlane;
 	float FarPlane;
 
-	FrameBuffer* pFrameBuffer;
+	RenderTargetType RenderTarget;
+
+	FrameBuffer* FrameBuffer;
 
 	glm::mat4x4 m_ProjectionMatrix;
 	glm::mat4x4 m_ViewMatrix;
@@ -42,6 +45,8 @@ typedef struct
 } CameraInfo;
 
 void camera_update(CameraInfo* rpCamera);
+
+void camera_add_render_target(CameraInfo* rpCamera, FrameBuffer& fb);
 
 #endif // !CAMERA_H
 

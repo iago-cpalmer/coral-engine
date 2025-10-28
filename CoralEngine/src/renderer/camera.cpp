@@ -85,3 +85,9 @@ void camera_update(CameraInfo* rpCamera)
 
 	rpCamera->Position += inputVec * rpCamera->MovementSpeed * (float)get_delta_time();
 }
+
+void camera_add_render_target(CameraInfo* rpCamera, FrameBuffer& fb)
+{
+	rpCamera->FrameBuffer = &fb;
+	rpCamera->RenderTarget = RenderTargetType::Texture;
+}

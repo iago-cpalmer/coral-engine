@@ -9,6 +9,7 @@
 #include "../scene/scene.h"
 
 void begin_render(Scene* rp_Scene, CameraInfo* rpCamera);
+void end_render();
 
 void draw_mesh(Mesh* rp_mesh, glm::mat4x4 r_transform, MaterialHandle* r_materials, unsigned int r_matCount);
 

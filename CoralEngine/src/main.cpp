@@ -43,6 +43,7 @@ int main()
 	cursor_set_state(CursorLockType::CenterLock, false);
 	
 	CameraInfo camera{};
+	camera.RenderTarget = RenderTargetType::Screen;
 	camera.Projection = ProjectionType::Perspective;
 	camera.Position = glm::vec3(0.0f, 0.0f, 6.0f);
 	camera.Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -57,7 +58,7 @@ int main()
 
 	Scene scene;
 	init_scene(&scene);
-	scene_set_camera(&scene, &camera);
+	scene_add_camera(&scene, &camera);
 
 	al_load_all_assets();
 
@@ -189,6 +190,20 @@ int main()
 	FrameBuffer testFb = create_fb(FbRenderTargetType::Texture, 800, 600, 3);
 	fb_create_rb_for_depth(&testFb, GL_DEPTH24_STENCIL8, 800, 600);
 
+	CameraInfo cameraMirror{};
+	camera_add_render_target(&cameraMirror, testFb);
+	cameraMirror.Projection = ProjectionType::Perspective;
+	cameraMirror.Position = glm::vec3(0.0f, 0.0f, 8.0f);
+	cameraMirror.Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+	cameraMirror.Fov = 45.0f;
+	cameraMirror.SensitivityX = 10.0f;
+	cameraMirror.SensitivityY = 15.0f;
+	cameraMirror.MovementSpeed = 10.0f;
+	cameraMirror.NearPlane = 0.1f;
+	cameraMirror.FarPlane = 100.0f;
+
+	scene_add_camera(&scene, &cameraMirror);
+
 	// --- Definition of mesh ------------
 	VertexAttribute vertexAttributesMirror[] =
 	{
@@ -265,13 +280,6 @@ int main()
 		// ^^^ ------------------------
 
 #pragma endregion
-
-		// draw to fn
-		use_fb(testFb);
-		renderer_prepare_frame();
-		scene_render(&scene);
-		fb_unbind(testFb);
-		// end draw to fb
 
 		renderer_prepare_frame();
 
